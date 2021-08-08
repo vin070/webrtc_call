@@ -1,0 +1,5 @@
+<form [formGroup]="personal_details">
+    <label for="nameq">Enter your name*</label>
+    <input type="text" id="nameq" required minlength="2" appForbiddenName="name.value" formControlName="name">
+    <p *ngIf="(name.touched || name.dirty) && name.invalid">INVALID</p>
+</form>
