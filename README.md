@@ -1,7 +1,7 @@
 ## Peer to peer webRTC based call
 
 ## Demo
-![Peer to peer call demo](/docs/demo.mkv)
+![Peer to peer call demo](/docs/demo.mp4)
 
 ## Description
 Peer to Peer webRTC based call without any third party library. It is developed from scratch. Project has following features.
