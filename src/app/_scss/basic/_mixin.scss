@@ -1,0 +1,17 @@
+@mixin convert_utility($separator: $seprator) {
+    @each $utility_key, $utility_value in $utilities {
+        $values: map-get($utility_value, values);
+        $class: map-get($utility_value, class);
+        $propertys: map-get($utility_value, property);
+        
+        @each $key, $value in $values {
+            .#{$class}#{$separator}#{$key} {
+             @each $property in $propertys {
+                #{$property}: if($value == null, $key, $value);
+             }
+            }
+        }
+    }
+}
+
+@include convert_utility();

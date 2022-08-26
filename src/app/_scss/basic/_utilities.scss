@@ -1,0 +1,37 @@
+$utilities: (
+    "margin": (
+        class: m,
+        property: margin,
+        values: $spacers,
+    ),
+    "margin-x": (
+        class: mx,
+        property: margin-left margin-right,
+        values: $spacers
+    ),
+    "margin-y": (
+        class: my,
+        property: margin-top margin-bottom,
+        values: $spacers
+    ),
+    "margin-top": (
+        class: mt,
+        property: margin-top,
+        values: $spacers
+    ),
+    "margin-bottom": (
+        class: mb,
+        property: margin-bottom,
+        values: $spacers
+    ),
+    "margin-left": (
+        class: ml,
+        property: margin-left,
+        values: $spacers
+    ),
+    "margin-right": (
+        class: mr,
+        property: margin-right,
+        values: $spacers
+    )
+) !default;

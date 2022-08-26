@@ -1,25 +1,21 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import {FormValidationComponent} from './form-validation/form-validation.component';
-import {CrossValidationComponent} from './cross-validation/cross-validation.component';
-import {WebrtcCallingComponent} from './webrtc-calling/webrtc-calling.component';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { WebrtcCallingComponent } from "./webrtc-calling/webrtc-calling.component";
+
+//Route to component mapping
 const routes: Routes = [
   {
-    path:':room_name',
-    component:WebrtcCallingComponent
+    path: "webrtc/:room_name",
+    component: WebrtcCallingComponent,
   },
   {
-    path:'validation',
-    component:FormValidationComponent
+    path: "webrtc",
+    component: WebrtcCallingComponent,
   },
-  {
-    path:'cross-validation',
-    component:CrossValidationComponent
-  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -1,149 +1,30 @@
-<div class="flex flex-column container position-relative">
-    <div class="flex ">
-         <video autoplay id="local" class="position-absolute"></video>
+<div id="main_container">
+  <div>
+    <video autoplay id="local_video"></video>
+  </div>
+  <div>
+    <video autoplay id="remote_video"></video>
+    <audio autoplay id="remote_audio" hidden></audio>
+  </div>
+  <div id="control_bar">
+    <div [title]="!invite_copied?'Copy invite':'Invite copied'"
+      [ngStyle]="{'background-color':!invite_copied?'#5e6364':'#189B55'}" (click)="copy_invite()"
+      class="control_button control_button_common ">
+      <copy *ngIf="!invite_copied"></copy>
+      <check *ngIf="invite_copied"></check>
     </div>
-    <div class="flex ">
-        <video autoplay id="remote" class="position-absolute"></video>
+    <div class="control_button control_button_common ml_2" (click)="handle_mic_toggle()"
+      [attr.title]="audio_on?'Turn off microphone':'Turn on microphone'">
+      <mic-on *ngIf="audio_on"></mic-on>
+      <mic-off *ngIf="!audio_on"></mic-off>
     </div>
-    <div id="controlBar" class="flex flex-row align-items-center w-100 position-absolute justify-content-center">
-          <div id="microphoneOff" class="flex flex-column justify-content-center align-items-center cursor-pointer rounded-circle" *ngIf="!audioOn" (click) = "handleMicrophoneClick(false)" >
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="42" height="42"
-                 preserveAspectRatio="xMidYMid meet" style="width: 100%; height: 80%;">
-               <defs>
-               <clipPath id="animationMask_ddetR3Q1G7">
-                <rect width="48" height="48" x="0" y="0"></rect>
-              </clipPath>
-              <mask id="8SMHB3BR8o">
-                <rect fill="#ffffff" width="48" height="48" x="-24" y="-24"></rect>
-                <path fill="#000000" clip-rule="nonzero"
-                  d=" M-7.77,-10.111 C-7.77,-10.111 -9.187,-8.694 -9.187,-8.694 C-9.187,-8.694 9.204,9.697 9.204,9.697 C9.204,9.697 10.621,8.28 10.621,8.28 C10.621,8.28 -7.77,-10.111 -7.77,-10.111"
-                  fill-opacity="1"></path>
-              </mask>
-            </defs>
-            <g clip-path="url(#animationMask_ddetR3Q1G7)">
-              <g mask="url(#8SMHB3BR8o)" transform="matrix(1.35,0,0,1.35,24,24)" opacity="1"
-                style="user-select: none;">
-                <g opacity="1" transform="matrix(1,0,0,1,0,0)">
-                  <g opacity="1" transform="matrix(1,0,0,1,0,0)">
-                    <path class="fill bkbMM" fill="rgb(255,255,255)" fill-opacity="1"
-                      d="M0 0 M-9.188,-8.693 C-9.188,-8.693 -10.605,-7.276 -10.605,-7.276 C-10.605,-7.276 7.784,11.112 7.784,11.112 C7.784,11.112 9.2,9.695 9.2,9.695 C9.2,9.695 -9.188,-8.693 -9.188,-8.693z">
-                    </path>
-                  </g>
-                  <g opacity="1" transform="matrix(1,0,0,1,0,0)">
-                    <path class="fill bkbMM" fill="rgb(255,255,255)" fill-opacity="1"
-                      d="M0 0 M5,-0.5 C5,2.26 2.76,4.5 0,4.5 C-2.76,4.5 -5,2.26 -5,-0.5 C-5,-0.5 -7,-0.5 -7,-0.5 C-7,3.03 -4.390000000000001,5.93 -1,6.42 C-1,6.42 -1,9.5 -1,9.5 C-1,9.5 1,9.5 1,9.5 C1,9.5 1,6.42 1,6.42 C4.390000000000001,5.93 7,3.03 7,-0.5 C7,-0.5 5,-0.5 5,-0.5zM0 0 M-1,-6.5 C-1,-7.05 -0.55,-7.5 0,-7.5 C0.55,-7.5 1,-7.05 1,-6.5 C1,-6.5 1,-0.5 1,-0.5 C1,0.050000000000000044 0.55,0.5 0,0.5 C-0.55,0.5 -1,0.050000000000000044 -1,-0.5 C-1,-0.5 -1,-6.5 -1,-6.5zM0 0 M0,2.5 C1.66,2.5 3,1.16 3,-0.5 C3,-0.5 3,-6.5 3,-6.5 C3,-8.16 1.66,-9.5 0,-9.5 C-1.66,-9.5 -3,-8.16 -3,-6.5 C-3,-6.5 -3,-0.5 -3,-0.5 C-3,1.16 -1.66,2.5 0,2.5z">
-                    </path>
-                  </g>
-                </g>
-              </g>
-            </g>
-          </svg>
-          </div>
-          <div id="microphoneOn" class="flex flex-column justify-content-center align-items-center cursor-pointer rounded-circle " *ngIf="audioOn" (click)="handleMicrophoneClick(true)">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="42" height="42"
-            preserveAspectRatio="xMidYMid meet" style="width: 100%; height: 90%;">
-            <defs>
-              <clipPath id="animationMask_dM8FSMj3fs">
-                <rect width="48" height="48" x="0" y="0"></rect>
-              </clipPath>
-              <mask id="ZqyHx2DO9I">
-                <rect fill="#ffffff" width="48" height="48" x="-24" y="-24"></rect>
-                <path fill="#000000" clip-rule="nonzero"
-                  d=" M-7.77,-10.111 C-7.77,-10.111 -9.187,-8.694 -9.187,-8.694 C-9.187,-8.694 -9.183,-8.696 -9.183,-8.696 C-9.183,-8.696 -7.766,-10.113 -7.766,-10.113 C-7.766,-10.113 -7.77,-10.111 -7.77,-10.111"
-                  fill-opacity="1"></path>
-              </mask>
-            </defs>
-            <g clip-path="url(#animationMask_dM8FSMj3fs)">
-              <g mask="url(#ZqyHx2DO9I)" transform="matrix(1.35,0,0,1.35,24,24)" opacity="1"
-                style="user-select: none;">
-                <g opacity="1" transform="matrix(1,0,0,1,0,0)">
-                  <g opacity="0" transform="matrix(1,0,0,1,0,0)">
-                    <path class="fill bkbMM" fill="rgb(95,99,104)" fill-opacity="1"
-                      d="M0 0 M-9.188,-8.693 C-9.188,-8.693 -10.605,-7.276 -10.605,-7.276 C-10.605,-7.276 -10.605,-7.276 -10.605,-7.276 C-10.605,-7.276 -9.188,-8.693 -9.188,-8.693 C-9.188,-8.693 -9.188,-8.693 -9.188,-8.693z">
-                    </path>
-                  </g>
-                  <g opacity="1" transform="matrix(1,0,0,1,0,0)">
-                    <path class="fill bkbMM" fill="rgb(95,99,104)" fill-opacity="1"
-                      d="M0 0 M5,-0.5 C5,2.26 2.76,4.5 0,4.5 C-2.76,4.5 -5,2.26 -5,-0.5 C-5,-0.5 -7,-0.5 -7,-0.5 C-7,3.03 -4.390000000000001,5.93 -1,6.42 C-1,6.42 -1,9.5 -1,9.5 C-1,9.5 1,9.5 1,9.5 C1,9.5 1,6.42 1,6.42 C4.390000000000001,5.93 7,3.03 7,-0.5 C7,-0.5 5,-0.5 5,-0.5zM0 0 M-1,-6.5 C-1,-7.05 -0.55,-7.5 0,-7.5 C0.55,-7.5 1,-7.05 1,-6.5 C1,-6.5 1,-0.5 1,-0.5 C1,0.050000000000000044 0.55,0.5 0,0.5 C-0.55,0.5 -1,0.050000000000000044 -1,-0.5 C-1,-0.5 -1,-6.5 -1,-6.5zM0 0 M0,2.5 C1.66,2.5 3,1.16 3,-0.5 C3,-0.5 3,-6.5 3,-6.5 C3,-8.16 1.66,-9.5 0,-9.5 C-1.66,-9.5 -3,-8.16 -3,-6.5 C-3,-6.5 -3,-0.5 -3,-0.5 C-3,1.16 -1.66,2.5 0,2.5z">
-                    </path>
-                  </g>
-                </g>
-              </g>
-            </g>
-          </svg>
-          </div>
-          <div id="terminateCall" class="flex flex-column justify-content-center align-items-center cursor-pointer rounded-circle ml-2" (click)="leaveMeeting()">
-             <svg style="fill:#d93025" focusable="false" width="42" height="24" viewBox="0 0 24 24" class="Hdh4hc cIGbvc NMm5M">
-             <path
-                d="M23.62 11.27c-2.03-1.72-4.46-3-7.12-3.69C15.06 7.21 13.56 7 12 7s-3.06.21-4.5.58c-2.66.69-5.08 1.96-7.12 3.69-.45.38-.5 1.07-.08 1.49l.67.67 2.26 2.26c.33.33.85.39 1.25.13l2.56-1.64c.29-.18.46-.5.46-.84V9.65C8.93 9.23 10.44 9 12 9s3.07.23 4.5.65v3.68c0 .34.17.66.46.84l2.56 1.64c.4.25.92.2 1.25-.13l2.26-2.26.67-.67c.41-.41.37-1.1-.08-1.48z">
-             </path>
-              </svg>
-          </div>
-          <div  id="cameraOn" class="flex flex-column justify-content-center align-items-center cursor-pointer rounded-circle ml-2" *ngIf="videoOn" (click)="handleCameraClick(true)">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="42" height="42"
-            preserveAspectRatio="xMidYMid meet" style="width: 100%; height: 90%;">
-            <defs>
-              <clipPath id="animationMask_fk5LbX2AIT">
-                <rect width="48" height="48" x="0" y="0"></rect>
-              </clipPath>
-              <mask id="IOsLdyYrU1">
-                <rect fill="#ffffff" width="48" height="48" x="-24" y="-24"></rect>
-                <path fill="#000000" clip-rule="nonzero"
-                  d=" M-7.77,-10.599 C-7.77,-10.599 -9.19,-9.189 -9.19,-9.189 C-9.19,-9.189 -9.186,-9.192 -9.186,-9.192 C-9.186,-9.192 -7.769,-10.6 -7.769,-10.6 C-7.769,-10.6 -7.77,-10.599 -7.77,-10.599"
-                  fill-opacity="1"></path>
-              </mask>
-            </defs>
-            <g clip-path="url(#animationMask_fk5LbX2AIT)">
-              <g mask="url(#IOsLdyYrU1)" transform="matrix(1.35,0,0,1.35,24,24)" opacity="1"
-                style="user-select: none;">
-                <g opacity="1" transform="matrix(1,0,0,1,0,0)">
-                  <g opacity="0" transform="matrix(1,0,0,1,0,0)">
-                    <path class="fill bkbMM" fill="rgb(95,99,104)" fill-opacity="1"
-                      d="M0 0 M-9.19,-9.189 C-9.19,-9.189 -10.61,-7.779 -10.61,-7.779 C-10.61,-7.779 -10.608,-7.78 -10.608,-7.78 C-10.608,-7.78 -9.188,-9.188 -9.188,-9.188 C-9.188,-9.188 -9.19,-9.189 -9.19,-9.189z">
-                    </path>
-                  </g>
-                  <g opacity="1" transform="matrix(1,0,0,1,0,0)">
-                    <path class="fill bkbMM" fill="rgb(95,99,104)" fill-opacity="1"
-                      d="M0 0 M4,-2.31 C4,-2.31 4,6 4,6 C4,6 -8,6 -8,6 C-8,6 -8,-6 -8,-6 C-8,-6 4,-6 4,-6 C4,-6 4,-2.31 4,-2.31zM0 0 M6,-1.52 C6,-1.52 6,-6 6,-6 C6,-7.1 5.1,-8 4,-8 C4,-8 -8,-8 -8,-8 C-9.1,-8 -10,-7.1 -10,-6 C-10,-6 -10,6 -10,6 C-10,7.1 -9.1,8 -8,8 C-8,8 4,8 4,8 C5.1,8 6,7.1 6,6 C6,6 6,1.52 6,1.52 C6,1.52 10,5.5 10,5.5 C10,5.5 10,-5.5 10,-5.5 C10,-5.5 6,-1.52 6,-1.52z">
-                    </path>
-                  </g>
-                </g>
-              </g>
-            </g>
-          </svg>
-          </div>
-          <div id="cameraOff" class="flex flex-column justify-content-center align-items-center cursor-pointer rounded-circle ml-2" *ngIf="!videoOn" (click)="handleCameraClick(false)">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="42" height="42"
-            preserveAspectRatio="xMidYMid meet" style="width: 100%; height: 80%;">
-            <defs>
-              <clipPath id="animationMask_i3CZ25Dubu">
-                <rect width="48" height="48" x="0" y="0"></rect>
-              </clipPath>
-              <mask id="udwyLy2kCw">
-                <rect fill="#ffffff" width="48" height="48" x="-24" y="-24"></rect>
-                <path fill="#000000" clip-rule="nonzero"
-                  d=" M-7.77,-10.599 C-7.77,-10.599 -9.19,-9.189 -9.19,-9.189 C-9.19,-9.189 9.2,9.201 9.2,9.201 C9.2,9.201 10.61,7.791 10.61,7.791 C10.61,7.791 -7.77,-10.599 -7.77,-10.599"
-                  fill-opacity="1"></path>
-              </mask>
-            </defs>
-            <g clip-path="url(#animationMask_i3CZ25Dubu)">
-              <g mask="url(#udwyLy2kCw)" transform="matrix(1.35,0,0,1.35,24,24)" opacity="1"
-                style="user-select: none;">
-                <g opacity="1" transform="matrix(1,0,0,1,0,0)">
-                  <g opacity="1" transform="matrix(1,0,0,1,0,0)">
-                    <path class="fill bkbMM" fill="rgb(255,255,255)" fill-opacity="1"
-                      d="M0 0 M-9.19,-9.189 C-9.19,-9.189 -10.61,-7.779 -10.61,-7.779 C-10.61,-7.779 7.78,10.611 7.78,10.611 C7.78,10.611 9.19,9.201 9.19,9.201 C9.19,9.201 -9.19,-9.189 -9.19,-9.189z">
-                    </path>
-                  </g>
-                  <g opacity="1" transform="matrix(1,0,0,1,0,0)">
-                    <path class="fill bkbMM" fill="rgb(255,255,255)" fill-opacity="1"
-                      d="M0 0 M4,-2.31 C4,-2.31 4,6 4,6 C4,6 -8,6 -8,6 C-8,6 -8,-6 -8,-6 C-8,-6 4,-6 4,-6 C4,-6 4,-2.31 4,-2.31zM0 0 M6,-1.52 C6,-1.52 6,-6 6,-6 C6,-7.1 5.1,-8 4,-8 C4,-8 -8,-8 -8,-8 C-9.1,-8 -10,-7.1 -10,-6 C-10,-6 -10,6 -10,6 C-10,7.1 -9.1,8 -8,8 C-8,8 4,8 4,8 C5.1,8 6,7.1 6,6 C6,6 6,1.52 6,1.52 C6,1.52 10,5.5 10,5.5 C10,5.5 10,-5.5 10,-5.5 C10,-5.5 6,-1.52 6,-1.52z">
-                    </path>
-                  </g>
-                </g>
-              </g>
-            </g>
-          </svg>
-          </div>
+    <div class="control_button control_button_hangup  ml_2" (click)="leave_meeting()" title="Leave call">
+      <terminate-call></terminate-call>
     </div>
+    <div class="control_button control_button_common ml_2" (click)="handle_video_toggle()"
+      [attr.title]="audio_on?'Turn off video':'Turn on video'">
+      <video-on *ngIf="video_on"></video-on>
+      <video-off *ngIf="!video_on"></video-off>
+    </div>
+  </div>
 </div>

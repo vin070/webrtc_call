@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
-  stunServer:'stun:stun.l.google.com:19302',
-  turnServer:'turn:meeting.vineet:3478',
-  turnUserName:'vineet',
-  turnPassword:'12345',
-  socketIOURl:"https://localhost:3000"
+  stunServer: "stun:stun.l.google.com:19302",
+  turnServer: "turn:15.206.144.180:3478",
+  turnUserName: "vineet",
+  turnPassword: "ijkerf#)40ok",
+  socketIOURl: "https://15.206.144.180:3000",
 };
