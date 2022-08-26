@@ -1,27 +1,37 @@
-# PracticeDesign
+## Peer to peer webRTC based call
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.1.2.
+## Demo
+![Peer to peer call demo](/docs/demo.mkv)
 
-## Development server
+## Description
+Peer to Peer webRTC based call without any third party library. It is developed from scratch. Project has following features.
+- Mute/Unmute Audio.
+- Camera on/off.
+- Copy invite.
+- Terminate call.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Installation
+1. Install NodeJS version 16
+    - `cd ~`
+    - `curl -sL https://deb.nodesource.com/setup_16.x -o /tmp/nodesource_setup.sh`
+    - `sudo bash /tmp/nodesource_setup.sh`
+    - `sudo apt install nodejs -y `
+    - `sudo apt-get install gcc g++ make -y`
+    - verify nodeJS and npm package install using `node -v && npm -v` command.
 
-## Code scaffolding
+2. Installing angular version 11
+    - `sudo npm install -g @angular/cli@11`
+    - Verify angular cli installation using following command
+`ng --version`
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+3. Clone package.  
+    - `git clone https://github.com/vin070/webrtc_call.git`
+    - run `npm i` command in cloned repository to install project dependency.
+    - run `sudo ng serve --ssl` in cloned repository.
+    - `git clone https://github.com/vin070/node_signalling.git` to install signalling server.
+    - run `sudo node server.js` in signalling server directory.
+    - Navigate to https://localhost:4200. Enjoy and share peer to peer webRTC based call with your friends/colleagues.
+    - If you want to make a build after making changes in frontend code, run `sudo ng build --prod`. All compiled files are available in dist folder under project directory.
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Reference
+[Peer to Peer Architecture](https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Signaling_and_video_calling)
