@@ -1,8 +1,5 @@
 ## Peer to peer webRTC based call
 
-## Demo
-https://user-images.githubusercontent.com/34207176/186960873-33ceb9f1-2c27-45ac-a31c-f982ce7cd8b8.mp4
-
 ## Description
 Peer to Peer webRTC based call without any third party library. It is developed from scratch. Project has following features.
 - Mute/Unmute Audio.
